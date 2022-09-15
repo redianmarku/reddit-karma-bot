@@ -1,0 +1,12 @@
+[DEFAULT]
+submission_kind=t3
+subreddit_kind=t5
+oauth_url=https://oauth.reddit.com
+reddit_url=https://www.reddit.com
+short_url=https://redd.it
+[bot1]
+client_id=Li2-VO4jt6rheN6VppcxyQ
+client_secret=3_y4XwGSo_DMj9AYwZX5EFsMg9KW7g
+password=your reddit password
+username=	3_y4XwGSo_DMj9AYwZX5EFsMg9KW7g
+user_agent=Epic Bot
