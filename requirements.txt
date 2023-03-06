@@ -1,2 +1,3 @@
 praw
-slackclient
+slack_sdk
+apscheduler
