@@ -5,7 +5,7 @@ import random
 import os
 import praw
 import time
-import socket
+from requests import get
 from slack_sdk.webhook import WebhookClient
 
 def loadArguments():
@@ -29,7 +29,7 @@ def setup():
         file = open(logsFile, 'w')
         file.write('')
         file.close()
-    ipAddress = socket.gethostbyname(socket.gethostname())
+    ipAddress = get('https://ipapi.co/ip/').text
     begginningOfMessage = f"{ipAddress} - {args.username} - "
 
 def loadRedditBot():
