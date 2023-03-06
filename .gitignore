@@ -3,4 +3,4 @@ env
 slackWebHook.txt
 logs*.txt
 posts_replied_to-*.txt
-praw.ini*
+praw.ini
