@@ -102,7 +102,8 @@ def go():
         printTo("Stopping Bot...")
         exit(0)
     except Exception as error:
-        printTo(error + "Waiting for 10 min and trying again.", error=True)
+        printTo(error, error=True)
+        printTo("Restarting Bot in 10 minutes...")
         time.sleep(60*10)
         go()
         
