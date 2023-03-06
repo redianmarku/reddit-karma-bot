@@ -36,7 +36,7 @@ def loadRedditBot():
     global redditBot, slackToken
     redditBot = praw.Reddit(args.username)
     printTo("Logged in as: "+redditBot.user.me().name)
-
+    getKarma()
 
 def getKarma():
     printTo("Karma: "+str(redditBot.user.me().comment_karma))
@@ -83,10 +83,10 @@ def printTo(message, slack=True, error=False):
     if not error:
         message = begginningOfMessage + message
     else:
-        date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-        message = begginningOfMessage + f"{date} - *ERROR*: {message}"
+        message = begginningOfMessage +"*ERROR*: {message}"
+    date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
     with open(logsFile, "a") as file:
-        file.write(message + "\n")
+        file.write(date +" - " + message + "\n")
     if slack:
         slackAlert(message)
 
@@ -102,9 +102,9 @@ def go():
         printTo("Stopping Bot...")
         exit(0)
     except Exception as error:
-        printTo(error + "\n Waiting for 10 min and trying again", error=True)
+        printTo(error + "Waiting for 10 min and trying again.", error=True)
         time.sleep(60*10)
         go()
-
+        
 
 go()
