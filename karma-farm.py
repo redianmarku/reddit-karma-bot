@@ -96,11 +96,11 @@ def go():
     try:
         if not initiated:
             initiated = True
-            printTo("Bot started - Commenting every minute")
             loadArguments()
             setup()
             loadRedditBot()
             loadScheduler()
+            printTo("Bot started - Commenting every minute")
         doComment()
     except KeyboardInterrupt:
         sched.shutdown()
