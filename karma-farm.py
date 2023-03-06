@@ -29,7 +29,7 @@ def setup():
         file = open(logsFile, 'w')
         file.write('')
         file.close()
-    ipAddress = get('https://ipapi.co/ip/').text
+    ipAddress = get('https://ipecho.net/plain').text
     begginningOfMessage = f"{ipAddress} - {args.username} - "
 
 def loadRedditBot():
