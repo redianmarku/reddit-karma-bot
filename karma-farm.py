@@ -5,6 +5,7 @@ import random
 import os
 import praw
 import time
+import re
 from requests import get
 from slack_sdk.webhook import WebhookClient
 
@@ -39,6 +40,7 @@ def loadRedditBot():
     getKarma()
 
 def getKarma():
+    redditBot.user.me().refresh()
     printTo("Karma: "+str(redditBot.user.me().comment_karma))
 
 
@@ -105,9 +107,11 @@ def go():
         printTo("Stopping Bot...")
         exit(0)
     except Exception as error:
+        breakTime = re.search(r"\d+", str(error)) + 2
         printTo(error, error=True)
-        printTo("Restarting Bot in 10 minutes...")
-        time.sleep(60*10)
+
+        printTo(f"Restarting Bot in {breakTime} minutes...", slack=False)
+        time.sleep(60*breakTime)
         go()
 
 isInit = False
