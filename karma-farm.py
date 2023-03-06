@@ -107,7 +107,7 @@ def go():
         printTo("Stopping Bot...")
         exit(0)
     except Exception as error:
-        breakTime = re.search(r"\d+", str(error)) + 2
+        breakTime = int(re.search(r"\d+", str(error))) + 2
         printTo(error, error=True)
 
         printTo(f"Restarting Bot in {breakTime} minutes...", slack=False)
