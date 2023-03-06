@@ -8,9 +8,6 @@ import time
 from requests import get
 from slack_sdk.webhook import WebhookClient
 
-global initiated
-initiated = False
-
 def loadArguments():
     global args, postsRepliedToFile, logsFile
     parser = argparse.ArgumentParser(
@@ -93,9 +90,10 @@ def printTo(message, slack=True, error=False):
         slackAlert(message)
 
 def go():
+    global isInit
     try:
-        if not initiated:
-            initiated = True
+        if not isInit:
+            isInit = True
             loadArguments()
             setup()
             loadRedditBot()
@@ -111,6 +109,6 @@ def go():
         printTo("Restarting Bot in 10 minutes...")
         time.sleep(60*10)
         go()
-        
 
+isInit = False
 go()
