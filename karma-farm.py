@@ -8,6 +8,9 @@ import time
 from requests import get
 from slack_sdk.webhook import WebhookClient
 
+global initiated
+initiated = False
+
 def loadArguments():
     global args, postsRepliedToFile, logsFile
     parser = argparse.ArgumentParser(
@@ -63,7 +66,6 @@ def slackAlert(message):
 
 
 def doComment():
-    printTo("Bot started - Commenting every minute")
     subreddit = redditBot.subreddit("freekarma4u")
     randomposts = open("randomposts.txt").read()
     randomposts = randomposts.split('\n')
@@ -83,7 +85,7 @@ def printTo(message, slack=True, error=False):
     if not error:
         message = begginningOfMessage + message
     else:
-        message = begginningOfMessage +"*ERROR*: {message}"
+        message = begginningOfMessage + f"*ERROR*: {message}"
     date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
     with open(logsFile, "a") as file:
         file.write(date +" - " + message + "\n")
@@ -92,10 +94,13 @@ def printTo(message, slack=True, error=False):
 
 def go():
     try:
-        loadArguments()
-        setup()
-        loadRedditBot()
-        loadScheduler()
+        if not initiated:
+            initiated = True
+            printTo("Bot started - Commenting every minute")
+            loadArguments()
+            setup()
+            loadRedditBot()
+            loadScheduler()
         doComment()
     except KeyboardInterrupt:
         sched.shutdown()
