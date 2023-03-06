@@ -45,7 +45,7 @@ def getKarma():
 def loadScheduler():
     global sched
     sched=BackgroundScheduler()
-    sched.add_job(getKarma, 'interval', minutes=5)
+    sched.add_job(getKarma, 'interval', minutes=30)
     sched.start()
 
 def slackAlert(message):
@@ -102,8 +102,7 @@ def go():
         printTo("Stopping Bot...")
         exit(0)
     except Exception as error:
-        printTo(error, error=True)
-        printTo('Waiting for 10 min and trying again', error=True)
+        printTo(error + "\n Waiting for 10 min and trying again", error=True)
         time.sleep(60*10)
         go()
 
