@@ -40,13 +40,14 @@ def loadRedditBot():
     getKarma()
 
 def getKarma():
-    printTo("Karma: "+str(redditBot.user.me().comment_karma + redditBot.user.me().link_karma))
+    karmaRedditBot = praw.Reddit(args.username)
+    printTo("Karma: "+str(karmaRedditBot.user.me().comment_karma + karmaRedditBot.user.me().link_karma))
 
 
 def loadScheduler():
     global sched
     sched=BackgroundScheduler()
-    sched.add_job(getKarma, 'interval', minutes=30)
+    sched.add_job(getKarma, 'interval', hours=1)
     sched.start()
 
 def slackAlert(message):
@@ -74,7 +75,7 @@ def doComment():
             randompost = randomposts[rand]
             printTo("Replying to post: "+submission.title, slack=False)
             submission.reply(randompost)
-            time.sleep(2 * 60)
+            time.sleep(80)
             with open(postsRepliedToFile, "a") as posts_replied_to:
                 posts_replied_to.write(submission.id+",")
             done = open(postsRepliedToFile, 'r').read().split(',')
@@ -99,7 +100,7 @@ def go():
             setup()
             loadRedditBot()
             loadScheduler()
-            printTo("Bot started - Commenting every 2 minutes")
+            printTo("Bot started - Commenting every 80 seconds")
         doComment()
     except KeyboardInterrupt:
         sched.shutdown()
@@ -110,7 +111,7 @@ def go():
             breakTime = 2
             if(re.search(r"minutes", str(error))):
                 breakTime += int(re.findall(r"\d+ minutes", str(error))[0].split(" ")[0])
-            printTo(f"Restarting Bot in {breakTime} minutes...", slack=False)
+            printTo(f"Restarting Bot in {breakTime} minutes...", slack=True)
             time.sleep(60*breakTime)
             go()
         else:
