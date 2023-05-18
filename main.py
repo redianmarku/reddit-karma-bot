@@ -1,4 +1,4 @@
-import slack
+import slackk
 from datetime import datetime
 import random
 import os
