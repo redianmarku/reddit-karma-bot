@@ -1,0 +1,9 @@
+
+05/25/2023 17:41:48
+'str' object cannot be interpreted as an integer
+05/25/2023 17:43:36
+'str' object has no attribute 'stream'
+05/25/2023 17:46:34
+'str' object has no attribute 'stream'
+05/25/2023 17:46:58
+'str' object has no attribute 'stream'
