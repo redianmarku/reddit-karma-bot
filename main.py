@@ -5,23 +5,21 @@ import random
 import os
 import slack
 
-DELAY_TIME = input("Put the delay time in seconds between each comment reply (recomended 80): ")
-SUBREDDIT_NAME = input("Put the name of subreddit that you want to comment (default is 'freekarma4u'): ")
+DELAY_TIME = input("Put the delay time in seconds between each comment reply (recommended 80): ")
+SUBREDDIT_NAME = input("Put the name of the subreddit where you want to comment (default is 'freekarma4u'): ")
 sendSlackAlerts = False
 mybot = praw.Reddit("bot1")
 subreddit_name = "freekarma4u" if SUBREDDIT_NAME == "" else SUBREDDIT_NAME
 subreddit = mybot.subreddit(subreddit_name)
 
-
 if not os.path.isfile("posts_replied_to.txt"):
-    with open("posts_replied_to.txt", 'w'):
+    with open("posts_replied_to.txt", 'w', encoding='utf-8'):  # Specify the encoding
         pass
-
 
 def docomment():
     print("Bot started - Commenting every minute")
-    randomposts = open("randomposts.txt").read().split('|')
-    with open("posts_replied_to.txt", 'r') as done_file:
+    randomposts = open("randomposts.txt", encoding='utf-8').read().split('|')  # Specify the encoding
+    with open("posts_replied_to.txt", 'r', encoding='utf-8') as done_file:  # Specify the encoding
         done = done_file.read().split(',')
 
     for submission in subreddit.stream.submissions():
